@@ -1,0 +1,12 @@
+// 关于环境的配置在这里
+{
+  "extends": "@vue/tsconfig/tsconfig.node.json",
+  "include": ["vite.config.*", "vitest.config.*", "cypress.config.*", "playwright.config.*"],
+  // vite打包基于node，这里主要是关于环境的相关的文件
+  "compilerOptions": {
+    //合成说明设置为true，才可以被引用到tsconfig.json中去啊
+    "composite": true,
+    //在node环境中进行上述文件的编译
+    "types": ["node"]
+  }
+}

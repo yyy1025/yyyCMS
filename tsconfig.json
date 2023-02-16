@@ -1,0 +1,21 @@
+//关于业务代码的配置在这里
+{
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  // 扩展，继承：说明具体详细的配置在该路径下
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  // 指定需要编译的文件，类型说明文件，src文件夹下的文件
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "noImplicitAny": false //变量可以不定义类型，为any类型，设置为true，则不允许定义any类型
+  },
+
+  "references": [
+    {
+      "path": "./tsconfig.config.json"
+      //引用文件，在这里修改
+    }
+  ]
+}
