@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import accountLoginRequest from '@/service/login'
 import { localCache } from '@/utils/cache'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const loginStore = defineStore('login', {
   //state，get，actions
   state: () => ({
@@ -23,6 +25,8 @@ const loginStore = defineStore('login', {
       // localStorage.setItem('token', this.token)
       // localStorage.setItem('name', this.name)
       localCache.setCache('token', loginRes.data.token)
+      //跳转到主页
+      router.push('/main')
     }
   }
 })
