@@ -57,13 +57,19 @@
 
 <script lang="ts" setup>
 //导入ref,使用ref包裹默认值
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { Check } from '@element-plus/icons-vue'
 //已经挂载到了vue上面，难道不能直接使用吗
 import type { TabsPaneContext } from 'element-plus'
 import paneAccount from './pane-account.vue'
 import panePhone from './pane-phone.vue'
-const isRemPwd = ref(true)
+import { localCache } from '@/utils/cache'
+// const isRemPwd = ref(true)
+const isRemPwd = ref<boolean>(localCache.getCache('isRemPwd') ?? false)
+//isRemPwd也保持和上一次点击相同的状态
+watch(isRemPwd, (newValue) => {
+  localCache.setCache('isRemPwd', newValue)
+})
 const activeName = ref('phone')
 const accountNumber = ref('')
 const password = ref('')
@@ -71,18 +77,10 @@ const accountRef = ref<InstanceType<typeof paneAccount>>() //为什么是个函�
 const handleClick = (tab: TabsPaneContext, event: Event) => {
   console.log(tab, event)
 }
-
-function handleLoginBtnClick() {
-  if (activeName.value == 'account') {
-    //账号密码登录的时候
-    const name = 'yyy'
-    accountRef.value?.loginAction(name)
-  }
-}
 function loginAciton() {
   console.log('立即登录', accountRef.value?.loginAction)
   // accountRef.value?.loginAction(accountRef)
-  accountRef.value?.loginAction('login')
+  accountRef.value?.loginAction(isRemPwd.value)
 }
 </script>
 
