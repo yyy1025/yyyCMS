@@ -71,6 +71,7 @@ function loginAction(name) {
       // accountLoginRequest(data)
       //利用store中地actions中的方法发送请求
       useLoginStore.accountLoginAction({ name, password })
+      //发送请求之后返回的data里面就有{id,name,token}然后把返回的内容保存到store里面
     } else {
       console.log('验证失败')
       //提示错误消息
