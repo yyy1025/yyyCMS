@@ -14,15 +14,17 @@
           size="large"
           class="form"
         />
-        <!-- 发送验证码得有一个倒计时，还得和input在一行 -->
-        <el-button type="success">发送验证码</el-button>
       </el-form-item>
       <el-form-item label="*验证码" prop="verification">
-        <el-input
-          v-model="form.verification"
-          placeholder="请输入验证码"
-          size="large"
-        />
+        <div class="verify-code">
+          <!-- 发送验证码得有一个倒计时，还得和input在一行:用span标签包裹不行，只能用display布局 -->
+          <el-input
+            v-model="form.verification"
+            placeholder="请输入验证码"
+            size="large"
+          />
+          <el-button type="success">发送验证码</el-button>
+        </div>
       </el-form-item>
     </el-form>
   </div>
@@ -76,5 +78,8 @@ defineExpose({
   //直接更改form上面的属性label-width：文字的宽度小一点
   //文字和inout输入框垂直不对齐
   margin-top: 20px;
+  .verify-code {
+    display: flex;
+  }
 }
 </style>

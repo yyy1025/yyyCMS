@@ -4,12 +4,14 @@
 //全局的axios请求//分接口的请求在modules里面
 import type { InternalAxiosRequestConfig, AxiosRequestHeaders } from 'axios'
 import YYRequest from './request'
+import { localCache } from '@/utils/cache'
 import CONFIG from './request/config'
 const baseURL = CONFIG.BASE_URL
 const timeout = CONFIG.TIMEOUT
 
 const headers: AxiosRequestHeaders = {
-  'Content-Type': 'application/json'
+  'Content-Type': 'application/json',
+  Authorization: 'Bearer' + localCache.getCache('token') ?? ''
 } as AxiosRequestHeaders
 // YYRequest类型的配置对象
 const config1 = {
@@ -18,9 +20,12 @@ const config1 = {
   headers, //这是YYRequest类型的灵魂
   interceptors: {
     requestSuccessFn: (config) => {
-      const internalConfig = config as InternalAxiosRequestConfig
       console.log('xxx的请求被成功拦截')
-      return internalConfig
+      const token = localCache.getCache('token')
+      if (config.headers && token) {
+        config.headers.Authorization = 'Bearer' + token
+      }
+      return config
     },
     requestFailFn: (err) => {
       console.log('xxx的请求被拦截失败')
