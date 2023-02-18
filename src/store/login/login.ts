@@ -1,15 +1,19 @@
 import { defineStore } from 'pinia'
 import accountLoginRequest from '@/service/login'
 import getUserPmsById from '@/service/login'
+import getMenusByRoleid from '@/service/login'
 import { localCache } from '@/utils/cache'
 import { useRouter } from 'vue-router'
 const router = useRouter()
+interface loginType {
+  token: string
+  UserPms: any
+}
 const loginStore = defineStore('login', {
   //state，get，actions
-  state: () => ({
+  state: (): loginType => ({
     token: '',
-    name: '',
-    getUserPms: {}
+    UserPms: {}
   }),
   actions: {
     async accountLoginAction(account: any) {
@@ -19,7 +23,6 @@ const loginStore = defineStore('login', {
       //如果是第二次登录，可以从本地存储取出token，id是什么
       console.log('这是请求返回的结果', loginRes.data)
       this.token = loginRes.data.token
-      this.name = loginRes.data.name
       //进行本地缓存,只需要保存token
       // localStorage.setItem('id', this.id)
       // localStorage.setItem('token', this.token)
@@ -28,7 +31,11 @@ const loginStore = defineStore('login', {
       //根据id先拿到权限信息
       const getUserPmsRes = await getUserPmsById(loginRes.data.id)
       console.log(getUserPmsRes)
-      this.getUserPms = getUserPmsRes.data
+      this.UserPms = getUserPmsRes.data
+      console.log(getUserPmsRes.data.role)
+      const roleid = getUserPmsRes.data.role.id
+      //根据角色请求用户的权限
+      const permissions = await getMenusByRoleid(roleid)
       //跳转到主页
       router.push('/main')
     }

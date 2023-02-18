@@ -28,3 +28,10 @@ export function getUserPmsById(id: number) {
     method: 'GET'
   })
 }
+export function getMenusByRoleid(roleid: number) {
+  return YYRequest.request({
+    headers: {} as AxiosRequestHeaders,
+    url: `/role/${roleid}/menu`,
+    method: 'GET'
+  })
+}
