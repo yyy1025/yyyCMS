@@ -12,12 +12,13 @@ import '../src/assets/css/reset.less'
 
 import './assets/main.css'
 import router from './router'
-import store from './store'
+import pinia from './store'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 const app = createApp(App)
 app.use(ElementPlus)
-app.use(store)
+app.use(pinia)
+// app.use(store)
 app.use(router)
 app.mount('#app')
 

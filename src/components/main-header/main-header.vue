@@ -7,14 +7,7 @@
       </el-icon>
     </div>
     <div class="content">
-      <div class="bread-crumb">
-        <el-breadcrumb :separator-icon="ArrowRight">
-          <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
-          <el-breadcrumb-item>promotion management</el-breadcrumb-item>
-          <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-          <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
-        </el-breadcrumb>
-      </div>
+      <headerCrumb></headerCrumb>
       <div class="user-info">
         <headerInfo></headerInfo>
       </div>
@@ -26,6 +19,7 @@
 import { ref } from 'vue'
 import { ArrowRight } from '@element-plus/icons-vue'
 import headerInfo from './c-cpns/header-info.vue'
+import headerCrumb from './c-cpns/header-crumb.vue'
 //定义自定义事件
 const emit = defineEmits(['foldChange'])
 const isExpand = ref(true)
@@ -52,10 +46,6 @@ function handleIconClick() {
     justify-content: space-between;
 
     .user-info {
-      .user-info-img {
-        width: 50px;
-        height: 50px;
-      }
     }
   }
 }

@@ -9,4 +9,4 @@ function registerStore(app: App<Element>) {
   const loginStore = useLoginStore()
   loginStore.loadLocalCacheAction()
 }
-export default registerStore
+export default pinia

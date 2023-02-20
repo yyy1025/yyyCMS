@@ -11,28 +11,27 @@
         <el-icon><Search /></el-icon>
       </span>
     </div>
-    <div class="user-info">
-      <!-- <el-avatar :size="50" :src="circleUrl" /> -->
-      <a href="#">
-        <img class="user-info-img" src="@/assets/img/user-info.png" alt="" />
-      </a>
-    </div>
+
     <div class="info">
-      info
       <el-dropdown>
-        <span class="el-dropdown-link">
-          Dropdown List
-          <el-icon class="el-icon--right">
-            <arrow-down />
-          </el-icon>
-        </span>
+        <el-avatar :size="50" src="@/assets/img/user-info.png" />
+        <span class="name">coderwhy</span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>Action 1</el-dropdown-item>
-            <el-dropdown-item>Action 2</el-dropdown-item>
-            <el-dropdown-item>Action 3</el-dropdown-item>
-            <el-dropdown-item disabled>Action 4</el-dropdown-item>
-            <el-dropdown-item divided>Action 5</el-dropdown-item>
+            <el-dropdown-item divided>
+              <button @click="quitLogin">退出</button>
+              <el-icon><Message /></el-icon>
+
+              <span>退出系统</span>
+            </el-dropdown-item>
+            <el-dropdown-item divided>
+              <el-icon><Message /></el-icon>
+              <span>个人信息</span>
+            </el-dropdown-item>
+            <el-dropdown-item divided>
+              <el-icon><Message /></el-icon>
+              <span>修改密码</span>
+            </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -42,6 +41,14 @@
 
 <script lang="ts" setup>
 import { ArrowDown } from '@element-plus/icons-vue'
+import { localCache } from '@/utils/cache'
+import router from '@/router'
+function quitLogin() {
+  //删除缓存的token，store里面的呢
+  localCache.removeCache('token')
+  //跳转回登录页
+  router.push('/login')
+}
 </script>
 
 <style lang="less" scoped>
@@ -58,20 +65,25 @@ import { ArrowDown } from '@element-plus/icons-vue'
     .dot {
     }
   }
-  .user-info {
-    .user-info-img {
-      width: 50px;
-      height: 50px;
-    }
-  }
+
   .info {
     color: red;
     background: red;
+    :global(.el-dropdown-menu__item) {
+      line-height: 36px !important;
+      // 宽度是可以被撑开的
+      padding: 6px 22px;
+    }
+    :deep(.el-icon) {
+      width: 50px;
+    }
     .el-dropdown-link {
       cursor: pointer;
       color: var(--el-color-primary);
-      display: flex;
+      // display: flex;
+      opacity: 0.5;
       align-items: center;
+      transition: opacity 2s ease;
     }
   }
 }

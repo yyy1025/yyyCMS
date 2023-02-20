@@ -10,7 +10,7 @@ import MapMenusToRoutes from "@/utils/map-menus"
 
 interface loginType {
   token: string
-  UserPms: {},
+  UserPms: any,
   permissions: any[]
 }
 const loginStore = defineStore('loginStore', {
@@ -20,11 +20,6 @@ const loginStore = defineStore('loginStore', {
     UserPms: {},
     permissions: []
   }),
-  getters: {
-    permissions(): any {
-      return this.permissions;
-    }
-  },
   actions: {
     async accountLoginAction(account: any) {
       console.log('开始注册请求')
@@ -56,13 +51,17 @@ const loginStore = defineStore('loginStore', {
 
       const permissionsRes = await apis.get(`/role/${roleid}/menu`)
       console.log("权限", permissionsRes.data.data)
+      console.log(Array.isArray(permissionsRes.data.data))
       this.permissions = permissionsRes.data.data
+      console.log("permissionsRes.data.data", permissionsRes.data.data)
       localCache.setCache("permissions", permissionsRes.data.data)
       // const permissions = await getMenusByRoleid(roleid)
       //动态加载路由
-      const routes = MapMenusToRoutes(permissionsRes.data.data)
+      console.log("permissionsRes.data.data", permissionsRes.data.data)
+      const routes = MapMenusToRoutes(this.permissions)
+      console.log("routes", routes)
       routes.forEach(route => router.addRoute('main', route))
-
+      console.log("登陆成功，看一下main里面的router", router)
       //跳转到主页
       router.push("/main")
 
@@ -72,6 +71,7 @@ const loginStore = defineStore('loginStore', {
       const token = localCache.getCache("token")
       const userInfo = localCache.getCache("userInfo")
       const userMenus = localCache.getCache("userMenus")
+
       if (token && userInfo && userMenus) {
         //登录成功
         //重新存储

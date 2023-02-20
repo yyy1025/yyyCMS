@@ -1,9 +1,16 @@
 <template>
   <div class="app">
     <div>
-      <router-link to="/main">主页</router-link>
+      <el-config-provider :locale="zhCn">
+        <router-link to="/main">主页</router-link>
+        <router-link to="/login">登录</router-link>
+        <router-link to="/main/system/user">用户管理</router-link>
+        <router-view></router-view>
+      </el-config-provider>
+      <!-- <router-link to="/main">主页</router-link>
       <router-link to="/login">登录</router-link>
-      <router-view></router-view>
+      <router-link to="/main/system/role">用户管理</router-link>
+      <router-view></router-view> -->
 
       <!-- <router-view></router-view> -->
       <!-- 可以直接拿到store里面的东西 -->
@@ -21,6 +28,7 @@
 // import useCounterStore from '../src/store/counter'
 // const counterStore = useCounterStore()
 import { ref } from 'vue'
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 </script>
 
 <style lang="less" scoped>
