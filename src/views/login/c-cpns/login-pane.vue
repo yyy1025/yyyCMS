@@ -80,6 +80,7 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 function loginAciton() {
   console.log('立即登录', accountRef.value?.loginAction)
   // accountRef.value?.loginAction(accountRef)
+  console.log('去store里面执行请求')
   accountRef.value?.loginAction(isRemPwd.value)
 }
 </script>

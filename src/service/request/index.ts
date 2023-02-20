@@ -1,10 +1,8 @@
 import axios from 'axios'
-import AxiosHeaders from 'axios'
 import type {
   AxiosInstance,
   AxiosResponse,
-  InternalAxiosRequestConfig,
-  AxiosRequestHeaders
+  InternalAxiosRequestConfig
 } from 'axios'
 //因为是一种类型，必须使用仅类型导入进行导入。
 import type { YYRequestConfig, YYInterceptors } from './type'
@@ -44,7 +42,7 @@ class YYRequest {
         //响应拦截器接收响应结果
         return res.data
       },
-      (err: any) => {}
+      (err: any) => { }
     )
     //针对xxx请求实例的请求拦截器
     if (config.interceptors) {
@@ -71,7 +69,7 @@ class YYRequest {
   //request方法
   request<T = any>(config: YYRequestConfig<T>): Promise<T> {
     //设置单个请求的拦截器，这里使用单个请求的拦截器
-    console.log('现在到了调用request方法的时候')
+    console.log('现在到了调用request方法的时候', config.baseURL, config.url)
     if (config.interceptors?.requestSuccessFn) {
       //请求成功有值的话,调用拦截器执行成功的回调，更新config
       config = config.interceptors.requestSuccessFn(config)
@@ -83,9 +81,13 @@ class YYRequest {
       this._instance
         .request<any, T>(config)
         .then((res) => {
+          console.log('可以请求成功吗？？？')
+          console.log('config', config)
+          console.log('res', res)
           //如果我们为单个响应设置拦截器，这里使用单个响应的拦截器
           if (config.interceptors?.responseSuccessFn) {
             //返回的是promise实例，如果就是返回的函数
+
             res = config.interceptors.responseSuccessFn(res)
           }
           resolve(res)
@@ -105,6 +107,7 @@ class YYRequest {
   }
   //post方法
   post(config: any) {
+    console.log(config.data)
     return this.request({ ...config, method: 'post' })
   }
   //delete方法
@@ -118,5 +121,5 @@ class YYRequest {
   }
 }
 
-export default YYRequest //导出一个请求实例
+export default YYRequest //导出一个请求类
 export { YYRequestConfig, YYInterceptors }

@@ -1,10 +1,11 @@
 <template>
   <div class="app">
     <div>
-      <el-checkbox v-model="checked1" label="Option 1" size="large" />
-      <!-- <router-link to="/main">主页</router-link> -->
+      <router-link to="/main">主页</router-link>
       <router-link to="/login">登录</router-link>
       <router-view></router-view>
+
+      <!-- <router-view></router-view> -->
       <!-- 可以直接拿到store里面的东西 -->
       <!-- <div>{{ counterStore.counter }}</div> -->
       <!-- 也可以通过get得到store里面的东西 -->
@@ -20,13 +21,13 @@
 // import useCounterStore from '../src/store/counter'
 // const counterStore = useCounterStore()
 import { ref } from 'vue'
-const checked1 = ref(true)
 </script>
 
-<style lang= "less" scoped>
+<style lang="less" scoped>
 .app {
   /* background-color: red; */
   width: 100vw;
   height: 100vh;
+  background-color: #92a065;
 }
 </style>

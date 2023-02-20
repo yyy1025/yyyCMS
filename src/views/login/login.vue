@@ -17,7 +17,7 @@ import loginPanel from './c-cpns/login-pane.vue'
   height: 100%; */
   width: 100vw;
   height: 100vh;
-  background-color: url('../../assets/img/loginBg.svg');
+  // background-color: url('../../assets/img/loginBg.svg');
   /* tab页居中 */
   display: flex;
   align-items: center;

@@ -43,7 +43,6 @@ const form = reactive({
 })
 //本质上拿到的ELForm的实例
 const RuleFormRef = ref<InstanceType<typeof ElForm>>()
-const formRef = ref<FormInstance>()
 const accountRules: FormRules = {
   name: [
     { required: true, message: '必须输入用户名~', trigger: 'blur' },
@@ -66,14 +65,18 @@ function loginAction(isRemPwd: boolean) {
       //第一步校验成功之后才可以进行登录操作
       const name = form.name
       const password = form.password
-      const data = { name, password }
+      const data = {
+        name: name,
+        password: password
+      }
       //向相关接口请求数据，接口操作不写在业务逻辑里
       console.log('验证成功，可以发送请求了')
       // accountLoginRequest(data)
       //利用store中地actions中的方法发送请求
-      useLoginStore.accountLoginAction({ name, password }).then((res) => {
+      useLoginStore.accountLoginAction(data).then((res) => {
         //记住密码
         //显示在页面上（父传子）传参数
+        console.log('是否记住密码', isRemPwd)
         if (isRemPwd) {
           //记住账号和密码:
           //下次登录的时候上一次的账号和密码自动显示在页面上
