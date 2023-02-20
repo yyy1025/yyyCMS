@@ -55,11 +55,29 @@ const loginStore = defineStore('login', {
       localCache.setCache("permissions", permissionsRes.data.data)
       // const permissions = await getMenusByRoleid(roleid)
       //动态加载路由
-      MapMenusToRoutes(permissionsRes.data.data)
+      const routes = MapMenusToRoutes(permissionsRes.data.data)
+      routes.forEach(route => router.addRoute('main', route))
+
       //跳转到主页
-
-
       router.push("/main")
+
+    },
+    loadLocalCacheAction() {
+      const token = localCache.getCache("token")
+      const userInfo = localCache.getCache("userInfo")
+      const userMenus = localCache.getCache("userMenus")
+      if (token && userInfo && userMenus) {
+        //登录成功
+        //重新存储
+        this.token = token
+        this.UserPms = userInfo
+        this.permissions = userMenus
+        //刷新
+        //动态加载路由
+        const routes = MapMenusToRoutes(userMenus.data)
+        routes.forEach(route => router.addRoute('main', route))
+
+      }
 
     }
   }
