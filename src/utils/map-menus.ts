@@ -17,6 +17,8 @@ function loadLocalRoutes(): RouteRecordRaw[] {
 
   return localRoutes
 }
+export let firstMenu: any = null
+//首次登录成功进入的时候，进入到firstMenu.url里面
 export default function MapMenusToRoutes(permissions) {
   const localRoutes = loadLocalRoutes()
   const routes: RouteRecordRaw[] = []
@@ -27,8 +29,11 @@ export default function MapMenusToRoutes(permissions) {
       if (route) {
         console.log("进来了", route)
         routes.push(route)
+        if (!firstMenu)//为空{
+          firstMenu = submenu
       }
     }
   }
+
   return routes
 }
