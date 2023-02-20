@@ -10,16 +10,21 @@ import MapMenusToRoutes from "@/utils/map-menus"
 
 interface loginType {
   token: string
-  UserPms: any,
-  permissions: any
+  UserPms: {},
+  permissions: any[]
 }
-const loginStore = defineStore('login', {
+const loginStore = defineStore('loginStore', {
   //state，get，actions
   state: (): loginType => ({
     token: '',
     UserPms: {},
-    permissions: {}
+    permissions: []
   }),
+  getters: {
+    permissions(): any {
+      return this.permissions;
+    }
+  },
   actions: {
     async accountLoginAction(account: any) {
       console.log('开始注册请求')
@@ -62,6 +67,7 @@ const loginStore = defineStore('login', {
       router.push("/main")
 
     },
+    //这个刷新的actions在哪里被调用呢
     loadLocalCacheAction() {
       const token = localCache.getCache("token")
       const userInfo = localCache.getCache("userInfo")

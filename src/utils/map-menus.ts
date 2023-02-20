@@ -37,3 +37,13 @@ export default function MapMenusToRoutes(permissions) {
 
   return routes
 }
+export function MapPathToMenu(path: string, menus: any[]) {
+  for (const menu of menus) {
+    for (const submenu of menu.children) {
+      if (path === submenu.path)
+        return submenu
+    }
+  }
+  return undefined
+
+}

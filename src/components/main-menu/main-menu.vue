@@ -28,13 +28,21 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
 import {
   Document,
   Menu as IconMenu,
   Location,
   Setting
 } from '@element-plus/icons-vue'
-
+import { MapPathToMenu } from '@/utils/map-menus'
+import { useRoute, useRouter } from 'vue-router'
+import loginStore from '@/store/login/login'
+//设置`el-menu`的默认选中菜单高亮为刷新前的路由对应的菜单
+const route = useRoute() //是string格式
+const permissions = loginStore().permissions
+const oldpath = MapPathToMenu(route.path, permissions)
+const activeDefault = ref(oldpath.id + '')
 defineProps({
   isFold: {
     type: Boolean,
